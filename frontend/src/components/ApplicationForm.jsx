@@ -8,6 +8,7 @@ const ApplicationForm = (props) => {
   // all html related material below here
   return (
     <Form>
+      <p>this is the form</p>
       {/* Personal Information Section below this line*/}
 
       {/* Checkboxes Section below this line*/}
