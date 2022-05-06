@@ -1,6 +1,7 @@
 import Form from "react-bootstrap/Form"
 import { useState } from "react";
 import { Col, Row} from "react-bootstrap";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ApplicationForm = (props) => {
   // initialize state below this line
