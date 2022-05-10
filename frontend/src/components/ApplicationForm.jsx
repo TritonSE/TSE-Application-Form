@@ -19,50 +19,58 @@ const ApplicationForm = (props) => {
       <p>this is the form</p>
       {/* Personal Information Section below this line*/}
       <Row>
-        <Form.Group>
-          <Form.Label>Name (First, Last)</Form.Label>
-          <Form.Control required type ="text"
-          onChange={(e) => {changePersonalInfo("name", e.target.value)}}>
-          </Form.Control>
-        </Form.Group>
-
-        <Form.Group>
-          <Form.Label>Email</Form.Label>
-          <Form.Control required type ="email"
-          placeholder="name@example.com"
-          onChange={(e) => {changePersonalInfo("email", e.target.value)}}>
-          </Form.Control>
-        </Form.Group>  
+        <Col>
+          <Form.Group>
+            <Form.Label>Name (First, Last)</Form.Label>
+            <Form.Control required type ="text"
+            onChange={(e) => {changePersonalInfo("name", e.target.value)}}>
+            </Form.Control>
+          </Form.Group>
+        </Col>
+        <Col>
+          <Form.Group>
+            <Form.Label>Email</Form.Label>
+            <Form.Control required type ="email"
+            placeholder="name@example.com"
+            onChange={(e) => {changePersonalInfo("email", e.target.value)}}>
+            </Form.Control>
+          </Form.Group>  
+        </Col>
       </Row>
       
       <Row>
-        <Form.Group>
-          <Form.Label>Start Quarter</Form.Label>
-          <Form.Control required type ="text"
-          onChange={(e) => {changePersonalInfo("start quarter", e.target.value)}}>
-          </Form.Control>
-        </Form.Group>
-
-        <Form.Group>
-          <Form.Label>Start Year</Form.Label>
-          <Form.Control required type ="text"
-          onChange={(e) => {changePersonalInfo("start year", e.target.value)}}>
-          </Form.Control>
-        </Form.Group>
-
-        <Form.Group>
-          <Form.Label>Graduation Quarter</Form.Label>
-          <Form.Control required type ="text"
-          onChange={(e) => {changePersonalInfo("graduation quarter", e.target.value)}}>
-          </Form.Control>
-        </Form.Group>
-        
-        <Form.Group>
-          <Form.Label>Graduation Year</Form.Label>
-          <Form.Control required type ="text"
-          onChange={(e) => {changePersonalInfo("graduation year", e.target.value)}}>
-          </Form.Control>
-        </Form.Group>
+        <Col>
+          <Form.Group>
+            <Form.Label>Start Quarter</Form.Label>
+            <Form.Control required type ="text"
+            onChange={(e) => {changePersonalInfo("start quarter", e.target.value)}}>
+            </Form.Control>
+          </Form.Group>
+        </Col>
+        <Col>
+          <Form.Group>
+            <Form.Label>Start Year</Form.Label>
+            <Form.Control required type ="text"
+            onChange={(e) => {changePersonalInfo("start year", e.target.value)}}>
+            </Form.Control>
+          </Form.Group>
+        </Col>
+        <Col>
+          <Form.Group>
+            <Form.Label>Graduation Quarter</Form.Label>
+            <Form.Control required type ="text"
+            onChange={(e) => {changePersonalInfo("graduation quarter", e.target.value)}}>
+            </Form.Control>
+          </Form.Group>
+        </Col>
+        <Col>
+          <Form.Group>
+            <Form.Label>Graduation Year</Form.Label>
+            <Form.Control required type ="text"
+            onChange={(e) => {changePersonalInfo("graduation year", e.target.value)}}>
+            </Form.Control>
+          </Form.Group>
+        </Col>
       </Row>
 
       <Row>
