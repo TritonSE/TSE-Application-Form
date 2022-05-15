@@ -27,7 +27,7 @@ const ApplicationForm = (props) => {
               type ="text"
               onChange={(e) => {
                 changePersonalInfo("name", e.target.value)
-                }}>
+              }}>
             </Form.Control>
           </Form.Group>
         </Col>
@@ -40,7 +40,7 @@ const ApplicationForm = (props) => {
               placeholder="name@example.com"
               onChange={(e) => {
                 changePersonalInfo("email", e.target.value)
-                }}>
+              }}>
             </Form.Control>
           </Form.Group>  
         </Col>
@@ -67,7 +67,7 @@ const ApplicationForm = (props) => {
               type ="text"
               onChange={(e) => {
                 changePersonalInfo("start year", e.target.value)
-                }}>
+              }}>
             </Form.Control>
           </Form.Group>
         </Col>
@@ -79,7 +79,7 @@ const ApplicationForm = (props) => {
               type ="text"
               onChange={(e) => {
                 changePersonalInfo("graduation quarter", e.target.value)
-                }}>
+              }}>
             </Form.Control>
           </Form.Group>
         </Col>
@@ -91,7 +91,7 @@ const ApplicationForm = (props) => {
               type ="text"
               onChange={(e) => {
                 changePersonalInfo("graduation year", e.target.value)
-                }}>
+              }}>
             </Form.Control>
           </Form.Group>
         </Col>
@@ -106,7 +106,7 @@ const ApplicationForm = (props) => {
             type ="text"
             onChange={(e) => {
               changePersonalInfo("resume", e.target.value)
-              }}>
+            }}>
           </Form.Control>
           </Form.Group>
         </Col>
