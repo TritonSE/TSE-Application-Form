@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const ApplicationForm = (props) => {
   // initialize state below this line
 
+  // keeps track of which checkboxes are clicked
   const [roles, setRoles] = useState(
     {
     TestDev: false,
@@ -24,9 +25,8 @@ const ApplicationForm = (props) => {
 
   let handleCheckbox = (label) => {
 
-    // have to relogic this because it needs to not undo if just one is unchecked
-
-    console.log(label);
+    /* takes in which checkbox called this function and flips
+     the boolean in roles*/
     switch(label) {
       case "TEST Developer":
         setRoles({...roles, TestDev: !roles.TestDev});
@@ -60,20 +60,21 @@ const ApplicationForm = (props) => {
       
         <Container>
         <Row className="justify-content-md-center">
-          <Form.Label class="text-center">Which roles at TSE are you interested at applying to?</Form.Label>
+          <Form.Label class="text-center fw-bold fs-4">Which roles at TSE are you interested in applying to?</Form.Label>
         </Row>
         <br/>
           <Row className="justify-content-md-center">
-            <Col lg="2">
+            <Col md lg="2">
               <Form.Check 
               onClick={(e) => {handleCheckbox("Developer")}}
               name="Roles"
               label="Developer" 
               inline
+              // if any TEST box is checked, disable this checkbox
               disabled={roles.TestDev || roles.TestDes}
               />
             </Col>
-            <Col lg="2">
+            <Col md lg="2">
               <Form.Check 
               onClick={(e) => {handleCheckbox("Product Manager")}}
               name="Roles" 
@@ -82,19 +83,20 @@ const ApplicationForm = (props) => {
               disabled={roles.TestDev || roles.TestDes}
               />
             </Col>
-            <Col lg="2">
+            <Col md lg="2">
               <Form.Check 
                 onClick={(e) => {handleCheckbox("TEST Designer")}} 
                 name="Roles" 
                 label="TEST Designer" 
                 inline
+                // if any nonTEST box is checked, disable the checkbox
                 disabled={roles.Des || roles.Dev || roles.ProdMan}
                 />
             </Col>
           </Row>
       
-          <Row className="justify-content-md-center">
-            <Col lg="4">
+          <Row >
+            <Col md lg={{ span: 2, offset: 3 }}>
               <Form.Check 
               onClick={(e) => {handleCheckbox("Designer")}}
               name="Roles" 
@@ -102,15 +104,16 @@ const ApplicationForm = (props) => {
               disabled={roles.TestDev || roles.TestDes}
               />
             </Col>
-            <Col lg="2">
+            <Col md lg={{ span: 2, offset: 0 }}>
               <Form.Check 
               onClick={(e) => {handleCheckbox("TEST Developer")}}
               name="Roles" 
               label="TEST Developer"
               disabled={roles.Des || roles.Dev || roles.ProdMan}
               />
+              
             </Col>
-          
+            
           </Row>
         </Container>
       
