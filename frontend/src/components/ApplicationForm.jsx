@@ -1,4 +1,5 @@
 import Form from "react-bootstrap/Form"
+import Button from "react-bootstrap/Button"
 import { useState } from "react";
 import { Col, Row} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -6,6 +7,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const ApplicationForm = (props) => {
   // initialize state below this line
   const [formPersonalInfo, setPersonalInfo] = useState({});
+  const [errors, setErrors] = useState({});
+  const [valid, setValid] = useState(true);
 
   // create any event handler functions below this line
 
@@ -13,9 +16,36 @@ const ApplicationForm = (props) => {
     setPersonalInfo({...formPersonalInfo, [fieldName]: value}); 
   }
 
+  const handleErrors = () => {
+    const name = formPersonalInfo.name;
+    console.log(name)
+
+    // name 
+    if (/\d/.test(name) != false){
+      setErrors({...errors, [name]: "Username cannot contain numbers"})
+      setValid(...false);
+    }
+    console.log(errors)
+    console.log(valid)
+    // email
+
+    // start quarter and graudation quarter
+
+    // start year and graduation year
+
+    // resume
+
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleErrors();
+    console.log(formPersonalInfo)
+  }
+
   // all html related material below here
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <p>this is the form</p>
       {/* Personal Information Section below this line*/}
       <Row>
@@ -27,8 +57,12 @@ const ApplicationForm = (props) => {
               type ="text"
               onChange={(e) => {
                 changePersonalInfo("name", e.target.value)
-              }}>
+              }}
+              isInvalid={valid}>
             </Form.Control>
+            <Form.Control.Feedback type="invalid">
+              {errors.name}
+            </Form.Control.Feedback>
           </Form.Group>
         </Col>
         <Col>
@@ -54,7 +88,7 @@ const ApplicationForm = (props) => {
               required 
               type ="text"
               onChange={(e) => {
-                changePersonalInfo("start quarter", e.target.value)
+                changePersonalInfo("startQuarter", e.target.value)
                 }}>
             </Form.Control>
           </Form.Group>
@@ -66,7 +100,7 @@ const ApplicationForm = (props) => {
               required 
               type ="text"
               onChange={(e) => {
-                changePersonalInfo("start year", e.target.value)
+                changePersonalInfo("startYear", e.target.value)
               }}>
             </Form.Control>
           </Form.Group>
@@ -78,7 +112,7 @@ const ApplicationForm = (props) => {
               required 
               type ="text"
               onChange={(e) => {
-                changePersonalInfo("graduation quarter", e.target.value)
+                changePersonalInfo("graduationQuarter", e.target.value)
               }}>
             </Form.Control>
           </Form.Group>
@@ -90,7 +124,7 @@ const ApplicationForm = (props) => {
               required 
               type ="text"
               onChange={(e) => {
-                changePersonalInfo("graduation year", e.target.value)
+                changePersonalInfo("graduationYear", e.target.value)
               }}>
             </Form.Control>
           </Form.Group>
@@ -111,6 +145,8 @@ const ApplicationForm = (props) => {
           </Form.Group>
         </Col>
       </Row>      
+      
+      <Button type="submit">Submit</Button>
 
       {/* Checkboxes Section below this line*/}
 
