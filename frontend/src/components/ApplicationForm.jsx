@@ -1,53 +1,25 @@
 import Form from "react-bootstrap/Form"
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import Container from "react-bootstrap/Container"
+import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
+import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const ApplicationForm = (props) => {
   // initialize state below this line
 
   // keeps track of which checkboxes are clicked
-  const [roles, setRoles] = useState(
-    {
-    TestDev: false,
-    TestDes: false,
-    Dev: false,
-    Des: false,
-    ProdMan: false
-    }
-  );
-  
-
-  // create any event handler functions below this line
-
-  let handleCheckbox = (label) => {
-
-    /* takes in which checkbox called this function and flips
-     the boolean in roles*/
-    switch(label) {
-      case "TEST Developer":
-        setRoles({...roles, TestDev: !roles.TestDev});
-        break;
-      case "TEST Designer":
-        setRoles({...roles, TestDes: !roles.TestDes});
-        break;
-      case "Designer":
-        setRoles({...roles, Des: !roles.Des});
-        break;
-      case "Developer":
-        setRoles({...roles, Dev: !roles.Dev});
-        break;
-      case "Product Manager":
-        setRoles({...roles, ProdMan: !roles.ProdMan});
-        break;
-      default:
-        console.log("ERROR");
-    }
-}
-
+  const [roles, setRoles] = useState({
+    testDev: false,
+    testDes: false,
+    dev: false,
+    des: false,
+    prodMan: false});
+  const toggleCheckbox = (e) => {
+    const bool = roles[e.target.id]
+    setRoles({...roles, [e.target.id]:!bool})
+  }
   // all html related material below here
   return (
     <Form>
@@ -55,9 +27,7 @@ const ApplicationForm = (props) => {
       {/* Personal Information Section below this line*/}
 
       {/* Checkboxes Section below this line*/}
-
       <Form.Group>
-      
         <Container>
         <Row className="justify-content-md-center">
           <Form.Label class="text-center fw-bold fs-4">Which roles at TSE are you interested in applying to?</Form.Label>
@@ -66,59 +36,56 @@ const ApplicationForm = (props) => {
           <Row className="justify-content-md-center">
             <Col md lg="2">
               <Form.Check 
-              onClick={(e) => {handleCheckbox("Developer")}}
+              onClick={toggleCheckbox}
               name="Roles"
               label="Developer" 
-              inline
+              id = "dev"
               // if any TEST box is checked, disable this checkbox
-              disabled={roles.TestDev || roles.TestDes}
+              disabled = {roles.testDev || roles.testDes}
               />
             </Col>
             <Col md lg="2">
               <Form.Check 
-              onClick={(e) => {handleCheckbox("Product Manager")}}
+              onClick={toggleCheckbox}
               name="Roles" 
               label="Product Manager" 
-              inline
-              disabled={roles.TestDev || roles.TestDes}
+              id = "prodMan"
+              disabled = {roles.testDev || roles.testDes}
               />
             </Col>
             <Col md lg="2">
               <Form.Check 
-                onClick={(e) => {handleCheckbox("TEST Designer")}} 
+                onClick={toggleCheckbox} 
                 name="Roles" 
                 label="TEST Designer" 
-                inline
+                id = "testDes"
                 // if any nonTEST box is checked, disable the checkbox
-                disabled={roles.Des || roles.Dev || roles.ProdMan}
-                />
+                disabled = {roles.des || roles.dev || roles.prodMan}
+              />
             </Col>
           </Row>
-      
-          <Row >
+          <Row>
             <Col md lg={{ span: 2, offset: 3 }}>
               <Form.Check 
-              onClick={(e) => {handleCheckbox("Designer")}}
+              onClick={toggleCheckbox}
               name="Roles" 
               label="Designer"
-              disabled={roles.TestDev || roles.TestDes}
+              id = "des"
+              disabled = {roles.testDev || roles.testDes}
               />
             </Col>
             <Col md lg={{ span: 2, offset: 0 }}>
               <Form.Check 
-              onClick={(e) => {handleCheckbox("TEST Developer")}}
+              onClick={toggleCheckbox}
               name="Roles" 
               label="TEST Developer"
-              disabled={roles.Des || roles.Dev || roles.ProdMan}
+              id = "testDev"
+              disabled = {roles.des || roles.dev || roles.prodMan}
               />
-              
             </Col>
-            
           </Row>
         </Container>
-      
       </Form.Group>
-
       {/* Free Response Section below this line*/}
     </Form>
   );
