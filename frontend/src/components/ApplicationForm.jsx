@@ -2,6 +2,7 @@ import Form from "react-bootstrap/Form"
 import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
+import { Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -186,6 +187,72 @@ const ApplicationForm = (props) => {
         </Container>
       </Form.Group>
       {/* Free Response Section below this line*/}
+      <Row>
+        <Form.Group>
+          <Form.Label>Tell us about yourself</Form.Label>
+          <Form.Control
+              required 
+              as="textarea" rows={7}>
+            </Form.Control>
+        </Form.Group>
+      </Row>
+      <Row>
+        <Form.Group>
+          <Form.Label>Why TSE?</Form.Label>
+          <Form.Control
+              required 
+              as="textarea" rows={7}>
+            </Form.Control>
+        </Form.Group>
+      </Row>
+      <Row>
+        <Form.Group>
+          <Form.Label>Why are you interested in the developer role?</Form.Label>
+          <Form.Control
+              required 
+              as="textarea" rows={7}>
+            </Form.Control>
+        </Form.Group>
+      </Row>
+      <Row>
+        <Form.Group>
+          <Form.Label>Why are you interested in the designer role?</Form.Label>
+          <Form.Control
+              required 
+              as="textarea" rows={7}>
+            </Form.Control>
+        </Form.Group>
+      </Row>
+      <Row>
+        <Form.Group>
+          <Form.Label>Why are you interested in the TEST developer role?</Form.Label>
+          <Form.Control
+              required 
+              as="textarea" rows={7}>
+            </Form.Control>
+        </Form.Group>
+      </Row>
+      <Row>
+        <Form.Group>
+          <Form.Label>Why are you interested in the TEST designer role?</Form.Label>
+          <Form.Control
+              required 
+              as="textarea" rows={7}>
+            </Form.Control>
+        </Form.Group>
+      </Row>
+      <Row>
+        <Form.Group>
+          <Form.Label>Why are you interested in the product manager role?</Form.Label>
+          <Form.Control
+              required 
+              as="textarea" rows={7}>
+            </Form.Control>
+        </Form.Group>
+      </Row>
+      <Button variant="primary" type="submit">
+          Submit
+        </Button>
     </Form>
   );
 }
