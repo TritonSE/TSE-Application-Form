@@ -8,7 +8,6 @@ const ApplicationForm = (props) => {
   // initialize state below this line
   const [formPersonalInfo, setPersonalInfo] = useState({});
   const [errors, setErrors] = useState({});
-  const [valid, setValid] = useState(true);
 
   // create any event handler functions below this line
 
@@ -16,18 +15,32 @@ const ApplicationForm = (props) => {
     setPersonalInfo({...formPersonalInfo, [fieldName]: value}); 
   }
 
-  const handleErrors = () => {
-    const name = formPersonalInfo.name;
-    console.log(name)
+  // const handleErrors = () => {
+  //   const name = formPersonalInfo.name;
+  //   console.log(name)
 
-    // name 
-    if (/\d/.test(name) != false){
-      setErrors({...errors, [name]: "Username cannot contain numbers"})
-      setValid(...false);
+  //   // name 
+  //   if (/\d/.test(name) != false){
+  //     setErrors({...errors, [name]: "Username cannot contain numbers"})
+  //   }
+  //   console.log(errors)
+   
+  // }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setErrors(findErrors());
+    console.log(formPersonalInfo)
+  }
+
+  const findErrors = () => {
+    const newErrors = {}
+    // name
+    if (/\d/.test(formPersonalInfo.name) != false){
+      newErrors.name = "Username cannot contain numbers"
     }
-    console.log(errors)
-    console.log(valid)
-    // email
+    console.log(errors);
+     // email
 
     // start quarter and graudation quarter
 
@@ -35,12 +48,7 @@ const ApplicationForm = (props) => {
 
     // resume
 
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    handleErrors();
-    console.log(formPersonalInfo)
+    return newErrors
   }
 
   // all html related material below here
@@ -58,7 +66,7 @@ const ApplicationForm = (props) => {
               onChange={(e) => {
                 changePersonalInfo("name", e.target.value)
               }}
-              isInvalid={valid}>
+              isInvalid={!!errors.name}>
             </Form.Control>
             <Form.Control.Feedback type="invalid">
               {errors.name}
