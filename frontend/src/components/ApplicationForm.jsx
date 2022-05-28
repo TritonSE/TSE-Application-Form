@@ -1,7 +1,7 @@
-import Form from "react-bootstrap/Form"
-import Button from "react-bootstrap/Button"
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 import { useState } from "react";
-import { Col, Row} from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const ApplicationForm = (props) => {
@@ -12,35 +12,31 @@ const ApplicationForm = (props) => {
   // create any event handler functions below this line
 
   const changePersonalInfo = (fieldName, value) => {
-    setPersonalInfo({...formPersonalInfo, [fieldName]: value}); 
-  }
-
-  // const handleErrors = () => {
-  //   const name = formPersonalInfo.name;
-  //   console.log(name)
-
-  //   // name 
-  //   if (/\d/.test(name) != false){
-  //     setErrors({...errors, [name]: "Username cannot contain numbers"})
-  //   }
-  //   console.log(errors)
-   
-  // }
+    setPersonalInfo({ ...formPersonalInfo, [fieldName]: value });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors(findErrors());
-    console.log(formPersonalInfo)
-  }
+    console.log(formPersonalInfo);
+  };
 
   const findErrors = () => {
-    const newErrors = {}
+    const newErrors = {};
     // name
-    if (/\d/.test(formPersonalInfo.name) != false){
-      newErrors.name = "Username cannot contain numbers"
+    if (/\d/.test(formPersonalInfo.name) != false) {
+      newErrors.name = "Username cannot contain numbers";
     }
+    if (/^[,]$/.test(formPersonalInfo.name) != true) {
+      newErrors.name = "commas";
+    }
+
+    // if (formPersonalInfo.name.includes(",") != true){
+    //   newErrors.name = ""
+    // }
+
     console.log(errors);
-     // email
+    // email
 
     // start quarter and graudation quarter
 
@@ -48,8 +44,8 @@ const ApplicationForm = (props) => {
 
     // resume
 
-    return newErrors
-  }
+    return newErrors;
+  };
 
   // all html related material below here
   return (
@@ -60,14 +56,14 @@ const ApplicationForm = (props) => {
         <Col>
           <Form.Group>
             <Form.Label>Name (First, Last)</Form.Label>
-            <Form.Control 
-              required 
-              type ="text"
+            <Form.Control
+              required
+              type="text"
               onChange={(e) => {
-                changePersonalInfo("name", e.target.value)
+                changePersonalInfo("name", e.target.value);
               }}
-              isInvalid={!!errors.name}>
-            </Form.Control>
+              isInvalid={!!errors.name}
+            ></Form.Control>
             <Form.Control.Feedback type="invalid">
               {errors.name}
             </Form.Control.Feedback>
@@ -76,65 +72,65 @@ const ApplicationForm = (props) => {
         <Col>
           <Form.Group>
             <Form.Label>Email</Form.Label>
-            <Form.Control 
-              required 
-              type ="email"
+            <Form.Control
+              required
+              type="email"
               placeholder="name@example.com"
               onChange={(e) => {
-                changePersonalInfo("email", e.target.value)
-              }}>
-            </Form.Control>
-          </Form.Group>  
+                changePersonalInfo("email", e.target.value);
+              }}
+            ></Form.Control>
+          </Form.Group>
         </Col>
       </Row>
-      
+
       <Row>
         <Col>
           <Form.Group>
             <Form.Label>Start Quarter</Form.Label>
-            <Form.Control 
-              required 
-              type ="text"
+            <Form.Control
+              required
+              type="text"
               onChange={(e) => {
-                changePersonalInfo("startQuarter", e.target.value)
-                }}>
-            </Form.Control>
+                changePersonalInfo("startQuarter", e.target.value);
+              }}
+            ></Form.Control>
           </Form.Group>
         </Col>
         <Col>
           <Form.Group>
             <Form.Label>Start Year</Form.Label>
-            <Form.Control 
-              required 
-              type ="text"
+            <Form.Control
+              required
+              type="text"
               onChange={(e) => {
-                changePersonalInfo("startYear", e.target.value)
-              }}>
-            </Form.Control>
+                changePersonalInfo("startYear", e.target.value);
+              }}
+            ></Form.Control>
           </Form.Group>
         </Col>
         <Col>
           <Form.Group>
             <Form.Label>Graduation Quarter</Form.Label>
-            <Form.Control 
-              required 
-              type ="text"
+            <Form.Control
+              required
+              type="text"
               onChange={(e) => {
-                changePersonalInfo("graduationQuarter", e.target.value)
-              }}>
-            </Form.Control>
+                changePersonalInfo("graduationQuarter", e.target.value);
+              }}
+            ></Form.Control>
           </Form.Group>
         </Col>
         <Col>
           <Form.Group>
             <Form.Label>Graduation Year</Form.Label>
-            <Form.Control 
-              required 
-              type ="text"
+            <Form.Control
+              required
+              type="text"
               onChange={(e) => {
-                changePersonalInfo("graduationYear", e.target.value)
-              }}>
-            </Form.Control>
+                changePersonalInfo("graduationYear", e.target.value);
+              }}
+            ></Form.Control>
           </Form.Group>
         </Col>
       </Row>
@@ -142,18 +138,18 @@ const ApplicationForm = (props) => {
       <Row>
         <Col xs={4}>
           <Form.Group>
-          <Form.Label>Resume (please paste google drive link)</Form.Label>
-          <Form.Control 
-            required 
-            type ="text"
-            onChange={(e) => {
-              changePersonalInfo("resume", e.target.value)
-            }}>
-          </Form.Control>
+            <Form.Label>Resume (please paste google drive link)</Form.Label>
+            <Form.Control
+              required
+              type="text"
+              onChange={(e) => {
+                changePersonalInfo("resume", e.target.value);
+              }}
+            ></Form.Control>
           </Form.Group>
         </Col>
-      </Row>      
-      
+      </Row>
+
       <Button type="submit">Submit</Button>
 
       {/* Checkboxes Section below this line*/}
@@ -161,6 +157,6 @@ const ApplicationForm = (props) => {
       {/* Free Response Section below this line*/}
     </Form>
   );
-}
+};
 
 export default ApplicationForm;
