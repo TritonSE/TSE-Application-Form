@@ -1,31 +1,28 @@
-import Form from "react-bootstrap/Form"
-import Container from "react-bootstrap/Container"
-import Row from "react-bootstrap/Row"
-import Col from "react-bootstrap/Col"
-import { Button } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 const ApplicationForm = (props) => {
   // initialize state below this line
-  const [formPersonalInfo, setPersonalInfo] = useState({});
+  const [personalInfo, setPersonalInfo] = useState({});
+
   // keeps track of which checkboxes are clicked
   const [roles, setRoles] = useState({
-    testDev: false,
-    testDes: false,
-    dev: false,
-    des: false,
-    prodMan: false});
-  const toggleCheckbox = (e) => {
-    const bool = roles[e.target.id]
-    setRoles({...roles, [e.target.id]:!bool})
-  }
+    test_developer: false,
+    test_designer: false,
+    developer: false,
+    designer: false,
+    product_manager: false
+  });
 
   // create any event handler functions below this line
 
   const changePersonalInfo = (fieldName, value) => {
-    setPersonalInfo({...formPersonalInfo, [fieldName]: value}); 
+    setPersonalInfo({...personalInfo, [fieldName]: value}); 
+  }
+
+  const toggleCheckbox = (e) => {
+    const bool = roles[e.target.id]
+    setRoles({...roles, [e.target.id]:!bool})
   }
 
   // all html related material below here
@@ -69,7 +66,7 @@ const ApplicationForm = (props) => {
               required 
               type ="text"
               onChange={(e) => {
-                changePersonalInfo("start quarter", e.target.value)
+                changePersonalInfo("startQuarter", e.target.value)
                 }}>
             </Form.Control>
           </Form.Group>
@@ -81,7 +78,7 @@ const ApplicationForm = (props) => {
               required 
               type ="text"
               onChange={(e) => {
-                changePersonalInfo("start year", e.target.value)
+                changePersonalInfo("startYear", e.target.value)
               }}>
             </Form.Control>
           </Form.Group>
@@ -93,7 +90,7 @@ const ApplicationForm = (props) => {
               required 
               type ="text"
               onChange={(e) => {
-                changePersonalInfo("graduation quarter", e.target.value)
+                changePersonalInfo("gradQuarter", e.target.value)
               }}>
             </Form.Control>
           </Form.Group>
@@ -105,7 +102,7 @@ const ApplicationForm = (props) => {
               required 
               type ="text"
               onChange={(e) => {
-                changePersonalInfo("graduation year", e.target.value)
+                changePersonalInfo("gradYear", e.target.value)
               }}>
             </Form.Control>
           </Form.Group>
@@ -120,7 +117,7 @@ const ApplicationForm = (props) => {
             required 
             type ="text"
             onChange={(e) => {
-              changePersonalInfo("resume", e.target.value)
+              changePersonalInfo("resumeLink", e.target.value)
             }}>
           </Form.Control>
           </Form.Group>
@@ -140,8 +137,8 @@ const ApplicationForm = (props) => {
                 onClick={toggleCheckbox}
                 name="Roles"
                 label="Developer" 
-                id = "dev"
-                disabled = {roles.testDev || roles.testDes}
+                id = "developer"
+                disabled = {roles.test_developer || roles.test_designer}
               />
             </Col>
             <Col md lg="2">
@@ -149,8 +146,8 @@ const ApplicationForm = (props) => {
                 onClick={toggleCheckbox}
                 name="Roles" 
                 label="Product Manager" 
-                id = "prodMan"
-                disabled = {roles.testDev || roles.testDes}
+                id = "product_manager"
+                disabled = {roles.test_developer || roles.test_designer}
               />
             </Col>
             <Col md lg="2">
@@ -158,9 +155,9 @@ const ApplicationForm = (props) => {
                 onClick={toggleCheckbox} 
                 name="Roles" 
                 label="TEST Designer" 
-                id = "testDes"
+                id = "test_designer"
                 // if any nonTEST box is checked, disable the checkbox
-                disabled = {roles.des || roles.dev || roles.prodMan}
+                disabled = {roles.designer || roles.developer || roles.product_manager}
               />
             </Col>
           </Row>
@@ -170,8 +167,8 @@ const ApplicationForm = (props) => {
                 onClick={toggleCheckbox}
                 name="Roles" 
                 label="Designer"
-                id = "des"
-                disabled = {roles.testDev || roles.testDes}
+                id = "designer"
+                disabled = {roles.test_developer || roles.test_designer}
               />
             </Col>
             <Col md lg={{ span: 2, offset: 0 }}>
@@ -179,8 +176,8 @@ const ApplicationForm = (props) => {
                 onClick={toggleCheckbox}
                 name="Roles" 
                 label="TEST Developer"
-                id = "testDev"
-                disabled = {roles.des || roles.dev || roles.prodMan}
+                id = "test_developer"
+                disabled = {roles.designer || roles.developer || roles.product_manager}
               />
             </Col>
           </Row>
