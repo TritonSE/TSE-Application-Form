@@ -14,7 +14,6 @@ const ApplicationForm = (props) => {
     test_designer: false,
     developer: false,
     designer: false,
-    product_manager: false,
   });
 
   const [prompts, setPrompts] = useState({});
@@ -280,18 +279,11 @@ const ApplicationForm = (props) => {
             <Form.Check
               onClick={updateCheckbox}
               name="Roles"
-              label="Product Manager"
-              id="product_manager"
-              disabled={roles.test_developer || roles.test_designer}
-            />
-            <Form.Check
-              onClick={updateCheckbox}
-              name="Roles"
               label="TEST Designer"
               id="test_designer"
               // if any non-TEST box is checked, disable the checkbox
               disabled={
-                roles.designer || roles.developer || roles.product_manager
+                roles.designer || roles.developer
               }
             />
             <Form.Check
@@ -300,7 +292,7 @@ const ApplicationForm = (props) => {
               label="TEST Developer"
               id="test_developer"
               disabled={
-                roles.designer || roles.developer || roles.product_manager
+                roles.designer || roles.developer
               }
             />
           </Form.Group>
@@ -350,16 +342,6 @@ const ApplicationForm = (props) => {
               Why are you interested in the developer role specifically?
             </Form.Label>
             <Form.Control id="prompt_developer" onChange={updatePrompt} required as="textarea" rows={7}></Form.Control>
-          </Form.Group>
-        </Row>
-      )}
-      {roles.product_manager && (
-        <Row>
-          <Form.Group>
-            <Form.Label>
-              Why are you interested in the product manager role specifically?
-            </Form.Label>
-            <Form.Control id="prompt_product_manager" onChange={updatePrompt} required as="textarea" rows={7}></Form.Control>
           </Form.Group>
         </Row>
       )}
