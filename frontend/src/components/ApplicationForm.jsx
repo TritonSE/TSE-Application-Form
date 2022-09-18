@@ -1,8 +1,7 @@
 import { Alert, Button, Col, Form, Row } from "react-bootstrap";
 import React, { useState } from "react";
 
-// TODO: change this to point at the actual backend
-const SUBMIT_URL = "/api/application";
+const SUBMIT_URL = "https://tse-fulcrum-hwx4s.ondigitalocean.app/api/application";
 
 const ApplicationForm = (props) => {
   // initialize state below this line
