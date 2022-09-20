@@ -328,7 +328,7 @@ const ApplicationForm = (props) => {
         <Row>
           <Form.Group>
             <Form.Label>
-              Why are you interested in the Designer role specifically? 
+              Why are you interested in the Designer role specifically?
             </Form.Label>
             <Form.Control id="prompt_designer" onChange={updatePrompt} required as="textarea" rows={7}></Form.Control>
           </Form.Group>
@@ -348,7 +348,7 @@ const ApplicationForm = (props) => {
         <Row>
           <Form.Group>
             <Form.Label>
-              Why are you interested in the TEST Designer role specifically? 
+              Why are you interested in the TEST Designer role specifically?
             </Form.Label>
             <Form.Control id="prompt_test_designer" onChange={updatePrompt} required as="textarea" rows={7}></Form.Control>
           </Form.Group>
@@ -358,7 +358,7 @@ const ApplicationForm = (props) => {
         <Row>
           <Form.Group>
             <Form.Label>
-              Why are you interested in the TEST Developer role specifically? 
+              Why are you interested in the TEST Developer role specifically?
             </Form.Label>
             <Form.Control id="prompt_test_developer" onChange={updatePrompt} required as="textarea" rows={7}></Form.Control>
           </Form.Group>
