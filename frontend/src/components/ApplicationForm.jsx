@@ -101,7 +101,7 @@ const ApplicationForm = (props) => {
       <Row>
         <Col xs={12} md={6}>
           <Form.Group>
-            <Form.Label>Full name</Form.Label>
+            <Form.Label>Full Name</Form.Label>
             <Form.Control
               required
               type="text"
@@ -126,7 +126,7 @@ const ApplicationForm = (props) => {
         </Col>
         <Col xs={12} md={6}>
           <Form.Group>
-            <Form.Label>UCSD email address</Form.Label>
+            <Form.Label>UCSD Email Address</Form.Label>
             <Form.Control
               required
               type="email"
@@ -140,7 +140,7 @@ const ApplicationForm = (props) => {
         </Col>
         <Col xs={12} md={6}>
           <Form.Group>
-            <Form.Label>Phone number</Form.Label>
+            <Form.Label>Phone Number</Form.Label>
             <Form.Control
               required
               type="tel"
@@ -154,7 +154,7 @@ const ApplicationForm = (props) => {
       <Row>
         <Col xs={6} md={3}>
           <Form.Group>
-            <Form.Label>Start quarter</Form.Label>
+            <Form.Label>Start Quarter</Form.Label>
             <Form.Select
               required
               onChange={(e) => {
@@ -171,7 +171,7 @@ const ApplicationForm = (props) => {
         </Col>
         <Col xs={6} md={3}>
           <Form.Group>
-            <Form.Label>Start year</Form.Label>
+            <Form.Label>Start Year</Form.Label>
             <Form.Control
               required
               type="number"
@@ -191,7 +191,7 @@ const ApplicationForm = (props) => {
       <Row>
         <Col xs={6} md={3}>
           <Form.Group>
-            <Form.Label>Graduation quarter</Form.Label>
+            <Form.Label>Graduation Quarter</Form.Label>
             <Form.Select
               required
               onChange={(e) => {
@@ -208,7 +208,7 @@ const ApplicationForm = (props) => {
         </Col>
         <Col xs={6} md={3}>
           <Form.Group>
-            <Form.Label>Graduation year</Form.Label>
+            <Form.Label>Graduation Year</Form.Label>
             <Form.Control
               required
               type="number"
@@ -328,7 +328,7 @@ const ApplicationForm = (props) => {
         <Row>
           <Form.Group>
             <Form.Label>
-              Why are you interested in the designer role specifically?
+              Why are you interested in the Designer role specifically?
             </Form.Label>
             <Form.Control id="prompt_designer" onChange={updatePrompt} required as="textarea" rows={7}></Form.Control>
           </Form.Group>
@@ -338,7 +338,7 @@ const ApplicationForm = (props) => {
         <Row>
           <Form.Group>
             <Form.Label>
-              Why are you interested in the developer role specifically?
+              Why are you interested in the Developer role specifically?
             </Form.Label>
             <Form.Control id="prompt_developer" onChange={updatePrompt} required as="textarea" rows={7}></Form.Control>
           </Form.Group>
@@ -348,7 +348,7 @@ const ApplicationForm = (props) => {
         <Row>
           <Form.Group>
             <Form.Label>
-              Why are you interested in the TEST designer role specifically?
+              Why are you interested in the TEST Designer role specifically?
             </Form.Label>
             <Form.Control id="prompt_test_designer" onChange={updatePrompt} required as="textarea" rows={7}></Form.Control>
           </Form.Group>
@@ -358,7 +358,7 @@ const ApplicationForm = (props) => {
         <Row>
           <Form.Group>
             <Form.Label>
-              Why are you interested in the TEST developer role specifically?
+              Why are you interested in the TEST Developer role specifically?
             </Form.Label>
             <Form.Control id="prompt_test_developer" onChange={updatePrompt} required as="textarea" rows={7}></Form.Control>
           </Form.Group>
