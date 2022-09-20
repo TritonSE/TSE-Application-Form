@@ -350,7 +350,7 @@ const ApplicationForm = (props) => {
             Each role you select will have a corresponding free-response question.
           </p>
           <p>
-            The TSE Early Start Training (TEST) program provides students from <strong>underprivileged backgrounds</strong> who have little to no technical development/design experience with a first step into exploring software engineering and UI/UX design. TEST developers and designers will learn the fundamentals of their domain while working on beginner-level internal projects for TSE. TEST is a one year program that TSE provides. After the completion of the program, if TEST developers and designers want to join TSE, they would have to apply during the next recruitment cycle.
+            The TSE Early Start Training (TEST) program provides students from <strong>underprivileged backgrounds</strong> who have little to no technical design/development experience with a first step into exploring UI/UX design and software engineering. TEST designers and developers will learn the fundamentals of their domain while working on beginner-level internal projects for TSE. TEST is a one year program that TSE provides. After the completion of the program, if TEST designers and developers want to join TSE, they would have to apply during the next recruitment cycle.
           </p>
           <p>
             You may either apply to TSE or the TEST program, not both. Please apply to the TEST program if you believe that it would be a good fit for you. Once you apply to the TEST program, we will not be able to consider you for TSE and vice versa. If you are unsure about which is right for you, please email adave@ucsd.edu.
