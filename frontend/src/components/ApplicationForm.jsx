@@ -58,6 +58,9 @@ const ApplicationForm = (props) => {
       phone: personalInfo.phone,
       startQuarter,
       gradQuarter,
+      major: personalInfo.major,
+      majorDept: personalInfo.majorDept,
+      prevTest: personalInfo.prevTest,
       resumeUrl: personalInfo.resumeUrl,
       aboutPrompt: prompts.about,
       interestPrompt: prompts.interest,
@@ -226,6 +229,34 @@ const ApplicationForm = (props) => {
         </Form.Text>
       </Row>
       <Row>
+        <Col xs={12} md={6}>
+          <Form.Group>
+            <Form.Label>Major Department</Form.Label>
+            <Form.Control
+              required
+              type="text"
+              onChange={(e) => {
+                updatePersonalInfo("majorDept", e.target.value);
+              }}
+            ></Form.Control>
+            <Form.Text>e.g. Cognitive Science, Computer Science and Engineering, Mathematics</Form.Text>
+          </Form.Group>
+        </Col>
+        <Col xs={12} md={6}>
+          <Form.Group>
+            <Form.Label>Major</Form.Label>
+            <Form.Control
+              required
+              type="text"
+              onChange={(e) => {
+                updatePersonalInfo("major", e.target.value);
+              }}
+            ></Form.Control>
+            <Form.Text>e.g. Cognitive Science with Specialization in Design and Interaction, Computer Engineering</Form.Text>
+          </Form.Group>
+        </Col>
+      </Row>
+      <Row>
         <Col>
           <Form.Group>
             <Form.Label>
@@ -253,6 +284,24 @@ const ApplicationForm = (props) => {
                 permissions.
               </Form.Text>
             )}
+          </Form.Group>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Form.Group>
+            <Form.Label>Were you previously a part of TSE's TEST program? If so, were you a TEST Designer or a TEST Developer?</Form.Label>
+            <Form.Select
+              required
+              onChange={(e) => {
+                updatePersonalInfo("prevTest", e.target.value);
+              }}
+            >
+              <option>select...</option>
+              <option value="none">I was not a part of the TEST program</option>
+              <option value="test_designer">TEST Designer</option>
+              <option value="test_developer">TEST Developer</option>
+            </Form.Select>
           </Form.Group>
         </Col>
       </Row>
@@ -297,7 +346,15 @@ const ApplicationForm = (props) => {
           </Form.Group>
         </Col>
         <Form.Text>
-          Each role you select will have a corresponding free-response question.
+          <p>
+            Each role you select will have a corresponding free-response question.
+          </p>
+          <p>
+            The TSE Early Start Training (TEST) program provides students from <strong>underprivileged backgrounds</strong> who have little to no technical development/design experience with a first step into exploring software engineering and UI/UX design. TEST developers and designers will learn the fundamentals of their domain while working on beginner-level internal projects for TSE. TEST is a one year program that TSE provides. After the completion of the program, if TEST developers and designers want to join TSE, they would have to apply during the next recruitment cycle.
+          </p>
+          <p>
+            You may either apply to TSE or the TEST program, not both. Please apply to the TEST program if you believe that it would be a good fit for you. Once you apply to the TEST program, we will not be able to consider you for TSE and vice versa. If you are unsure about which is right for you, please email adave@ucsd.edu.
+          </p>
         </Form.Text>
       </Row>
       <Row>
@@ -348,7 +405,7 @@ const ApplicationForm = (props) => {
         <Row>
           <Form.Group>
             <Form.Label>
-              Why are you interested in the TEST Designer role specifically?
+              Why do you believe you are a good fit for the TEST program, and what do you hope to gain from the program? Additionally, why are you interested in the TEST Designer role specifically?
             </Form.Label>
             <Form.Control id="prompt_test_designer" onChange={updatePrompt} required as="textarea" rows={7}></Form.Control>
           </Form.Group>
@@ -358,7 +415,7 @@ const ApplicationForm = (props) => {
         <Row>
           <Form.Group>
             <Form.Label>
-              Why are you interested in the TEST Developer role specifically?
+              Why do you believe you are a good fit for the TEST program, and what do you hope to gain from the program? Additionally, why are you interested in the TEST Developer role specifically?
             </Form.Label>
             <Form.Control id="prompt_test_developer" onChange={updatePrompt} required as="textarea" rows={7}></Form.Control>
           </Form.Group>
@@ -378,7 +435,7 @@ const ApplicationForm = (props) => {
           </Col>
         </Row>
       )}
-      <Button variant="primary" type="submit">
+      <Button variant="primary" type="submit" className="mt-3">
         Submit
       </Button>
     </Form>
