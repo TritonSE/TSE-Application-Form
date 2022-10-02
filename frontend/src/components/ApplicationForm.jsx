@@ -2,6 +2,8 @@ import { Alert, Button, Col, Form, Row } from "react-bootstrap";
 import React, { useState } from "react";
 
 const SUBMIT_URL = "https://tse-fulcrum-hwx4s.ondigitalocean.app/api/application";
+const DEADLINE = new Date("2022-10-09T23:59-07:00"); // PDT is UTC-7
+const deadlineStr = DEADLINE.toLocaleString("en-US");
 
 const ApplicationForm = (props) => {
   // initialize state below this line
@@ -98,9 +100,16 @@ const ApplicationForm = (props) => {
 
   };
 
+  if (new Date() > DEADLINE) {
+    return (
+      <p>Applications for the current school year closed at {deadlineStr}.</p>
+    );
+  }
+
   // all html related material below here
   return (
     <Form className="ApplicationForm" onSubmit={onSubmit}>
+      <p>The deadline to submit your application is {deadlineStr}.</p>
       <Row>
         <Col xs={12} md={6}>
           <Form.Group>
