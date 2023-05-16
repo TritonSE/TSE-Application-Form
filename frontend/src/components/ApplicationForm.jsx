@@ -270,7 +270,7 @@ const ApplicationForm = (props) => {
           <Form.Group>
             <Form.Label>
               Resume, as a Google Drive link to a PDF, shared so that anyone can
-              view:
+              view (1 page only, otherwise your application will not be considered):
             </Form.Label>
             <Form.Control
               required
