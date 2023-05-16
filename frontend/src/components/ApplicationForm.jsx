@@ -394,7 +394,7 @@ const ApplicationForm = (props) => {
         <Row>
           <Form.Group>
             <Form.Label>
-              Why are you interested in the Designer role specifically?
+              Why are you interested in the Designer role specifically? Please also include a link to your portfolio or body of work (if any), and make sure your link is publicly viewable, or provide instructions on how to access it.
             </Form.Label>
             <Form.Control id="prompt_designer" onChange={updatePrompt} required as="textarea" rows={7}></Form.Control>
           </Form.Group>
