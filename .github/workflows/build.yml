@@ -12,12 +12,13 @@ jobs:
       - uses: actions/setup-node@v3
       - name: Build static website
         run: |
+          cd frontend
           npm ci
           npm run build
       - name: Push static files to gh-pages
         run: |
-          cp -a .git build/
-          cd build/
+          cp -a .git frontend/build/
+          cd frontend/build/
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout --orphan gh-pages
