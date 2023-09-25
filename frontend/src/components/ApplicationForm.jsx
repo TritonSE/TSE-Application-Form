@@ -1,8 +1,8 @@
 import { Alert, Button, Col, Form, Row } from "react-bootstrap";
 import React, { useState } from "react";
 
-const SUBMIT_URL = "https://tse-fulcrum-hwx4s.ondigitalocean.app/api/application";
-const DEADLINE = new Date("2022-10-09T23:59-07:00"); // PDT is UTC-7
+const SUBMIT_URL = "https://tse-fulcrum-2023-i83hg.ondigitalocean.app/api/application";
+const DEADLINE = new Date("2023-10-15T23:59:59-07:00"); // PDT is UTC-7
 const deadlineStr = DEADLINE.toLocaleString("en-US");
 
 const ApplicationForm = (props) => {
@@ -50,6 +50,10 @@ const ApplicationForm = (props) => {
       return;
     }
 
+    if (!personalInfo.startQuarter || !personalInfo.gradQuarter) {
+      setError("Select your start quarter and graduation quarter.");
+      return;
+    }
     const startQuarter = parseInt(personalInfo.startQuarter) + 4 * parseInt(personalInfo.startYear);
     const gradQuarter = parseInt(personalInfo.gradQuarter) + 4 * parseInt(personalInfo.gradYear);
 
@@ -105,6 +109,12 @@ const ApplicationForm = (props) => {
       <p>Applications for the current school year closed at {deadlineStr}.</p>
     );
   }
+
+  // By default, mouse wheel events on a number input will change the numeric
+  // value. This results in people accidentally changing the values when they
+  // scroll the page, so we disable it.
+  // https://stackoverflow.com/a/67157325
+  const numberInputOnWheel = (e) => e.currentTarget.blur();
 
   // all html related material below here
   return (
@@ -173,10 +183,11 @@ const ApplicationForm = (props) => {
                 updatePersonalInfo("startQuarter", e.target.value);
               }}
             >
-              <option>select...</option>
+              <option value="" disabled>select...</option>
               <option value="0">Winter</option>
               <option value="1">Spring</option>
-              <option value="2">Summer</option>
+              {/* Hide summer because people often select summer when they mean spring. */}
+              {/*<option value="2">Summer</option>*/}
               <option value="3">Fall</option>
             </Form.Select>
           </Form.Group>
@@ -192,6 +203,7 @@ const ApplicationForm = (props) => {
               onChange={(e) => {
                 updatePersonalInfo("startYear", e.target.value);
               }}
+              onWheel={numberInputOnWheel}
             ></Form.Control>
           </Form.Group>
         </Col>
@@ -210,10 +222,11 @@ const ApplicationForm = (props) => {
                 updatePersonalInfo("gradQuarter", e.target.value);
               }}
             >
-              <option>select...</option>
+              <option value="" disabled>select...</option>
               <option value="0">Winter</option>
               <option value="1">Spring</option>
-              <option value="2">Summer</option>
+              {/* Hide summer because people often select summer when they mean spring. */}
+              {/*<option value="2">Summer</option>*/}
               <option value="3">Fall</option>
             </Form.Select>
           </Form.Group>
@@ -229,6 +242,7 @@ const ApplicationForm = (props) => {
               onChange={(e) => {
                 updatePersonalInfo("gradYear", e.target.value);
               }}
+              onWheel={numberInputOnWheel}
             ></Form.Control>
           </Form.Group>
         </Col>
@@ -269,16 +283,23 @@ const ApplicationForm = (props) => {
         <Col>
           <Form.Group>
             <Form.Label>
-              Resume, as a Google Drive link to a PDF, shared so that anyone can
-              view (1 page only, otherwise your application will not be considered):
+              Resume link:
+              <Alert variant="danger">
+                <ul>
+                  <li>Your resume must be 1 page in PDF format.</li>
+                  <li>Upload your resume to Google Drive, share it so that anyone can view, and paste the link below.</li>
+                  <li>Ensure that your resume is accessible through this link until the end of Fall quarter (so don't delete it or change the sharing permissions).</li>
+                </ul>
+                If your resume cannot be accessed or does not meet these requirements, your application will not be considered.
+              </Alert>
+              <Form.Control
+                required
+                type="url"
+                onChange={(e) => {
+                  updatePersonalInfo("resumeUrl", e.target.value);
+                }}
+              ></Form.Control>
             </Form.Label>
-            <Form.Control
-              required
-              type="url"
-              onChange={(e) => {
-                updatePersonalInfo("resumeUrl", e.target.value);
-              }}
-            ></Form.Control>
             {personalInfo.resumeUrl && (
               <Form.Text>
                 Open{" "}
@@ -362,7 +383,7 @@ const ApplicationForm = (props) => {
             The TSE Early Start Training (TEST) program provides students from <strong>underprivileged backgrounds</strong> who have little to no technical design/development experience with a first step into exploring UI/UX design and software engineering. TEST designers and developers will learn the fundamentals of their domain while working on beginner-level internal projects for TSE. TEST is a one year program that TSE provides. After the completion of the program, if TEST designers and developers want to join TSE, they would have to apply during the next recruitment cycle.
           </p>
           <p>
-            You may either apply to TSE or the TEST program, not both. Please apply to the TEST program if you believe that it would be a good fit for you. Once you apply to the TEST program, we will not be able to consider you for TSE and vice versa. If you are unsure about which is right for you, please email adave@ucsd.edu.
+            You may either apply to TSE or the TEST program, not both. Please apply to the TEST program if you believe that it would be a good fit for you. Once you apply to the TEST program, we will not be able to consider you for TSE and vice versa. If you are unsure about which is right for you, please email tse@ucsd.edu.
           </p>
         </Form.Text>
       </Row>
