@@ -386,7 +386,7 @@ const ApplicationForm = (props) => {
             The TSE Early Start Training (TEST) program provides students from <strong>underprivileged backgrounds</strong>, who have little to no technical design/development experience, with a first step into exploring UI/UX design and software engineering. TEST designers and developers will learn the fundamentals of their domain while working on beginner-level projects. TEST is a one-year program provided by TSE. After completing the program, if TEST designers and developers wish to join TSE as general members, they must apply during the next recruitment cycle.
           </p>
           <p>
-            You may apply to either TSE or the TEST program, but not both. Please apply to the TEST program if you believe it would be a good fit for you. Once you apply to the TEST program, we will not be able to consider you for general admission, and vice versa. If you are unsure about which program is right for you, please email {PRESIDENT_EMAIL}.
+            You may apply to either TSE or the TEST program, but not both. Please apply to the TEST program if you believe it would be a good fit for you. Once you apply to the TEST program, we will not be able to consider you for general admission, and vice versa. If you are unsure about which program is right for you, please contact TSE's current president at {PRESIDENT_EMAIL}.
           </p>
         </Form.Text>
       </Row>
