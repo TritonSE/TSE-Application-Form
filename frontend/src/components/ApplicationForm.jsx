@@ -186,7 +186,7 @@ const ApplicationForm = (props) => {
                 updatePersonalInfo("startQuarter", e.target.value);
               }}
             >
-              <option value="" disabled>select...</option>
+              <option value="">select...</option>
               <option value="0">Winter</option>
               <option value="1">Spring</option>
               {/* Hide summer because people often select summer when they mean spring. */}
@@ -225,7 +225,7 @@ const ApplicationForm = (props) => {
                 updatePersonalInfo("gradQuarter", e.target.value);
               }}
             >
-              <option value="" disabled>select...</option>
+              <option value="">select...</option>
               <option value="0">Winter</option>
               <option value="1">Spring</option>
               {/* Hide summer because people often select summer when they mean spring. */}
@@ -330,7 +330,7 @@ const ApplicationForm = (props) => {
                 updatePersonalInfo("prevTest", e.target.value);
               }}
             >
-              <option>select...</option>
+              <option value="">select...</option>
               <option value="none">I was not a part of the TEST program</option>
               <option value="test_designer">TEST Designer</option>
               <option value="test_developer">TEST Developer</option>
