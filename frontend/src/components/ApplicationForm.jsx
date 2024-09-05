@@ -2,7 +2,8 @@ import { Alert, Button, Col, Form, Row } from "react-bootstrap";
 import React, { useState } from "react";
 
 // Update these values each year before recruitment.
-const SUBMIT_URL = "https://tse-fulcrum-2023-i83hg.ondigitalocean.app/api/application";
+const SUBMIT_URL =
+  "https://tse-fulcrum-2023-i83hg.ondigitalocean.app/api/application";
 const PRESIDENT_EMAIL = "nboloori@ucsd.edu";
 const DEADLINE = new Date("2023-10-15T23:59:59-07:00"); // PDT is UTC-7
 
@@ -17,7 +18,7 @@ const ApplicationForm = (props) => {
     test_developer: false,
     test_designer: false,
     developer: false,
-    designer: false,
+    designer: false
   });
 
   const [prompts, setPrompts] = useState({});
@@ -38,7 +39,7 @@ const ApplicationForm = (props) => {
   const updatePrompt = (e) => {
     setPrompts({
       ...prompts,
-      [e.target.id.replace("prompt_", "")]: e.target.value,
+      [e.target.id.replace("prompt_", "")]: e.target.value
     });
   };
 
@@ -47,7 +48,9 @@ const ApplicationForm = (props) => {
     setError("");
     setSuccess("");
 
-    const selectedRoles = Object.entries(roles).filter(([role, selected]) => selected).map(([role, selected]) => role);
+    const selectedRoles = Object.entries(roles)
+      .filter(([role, selected]) => selected)
+      .map(([role, selected]) => role);
     if (selectedRoles.length === 0) {
       setError("You must select at least one role to apply to.");
       return;
@@ -57,8 +60,11 @@ const ApplicationForm = (props) => {
       setError("Select your start quarter and graduation quarter.");
       return;
     }
-    const startQuarter = parseInt(personalInfo.startQuarter) + 4 * parseInt(personalInfo.startYear);
-    const gradQuarter = parseInt(personalInfo.gradQuarter) + 4 * parseInt(personalInfo.gradYear);
+    const startQuarter =
+      parseInt(personalInfo.startQuarter) +
+      4 * parseInt(personalInfo.startYear);
+    const gradQuarter =
+      parseInt(personalInfo.gradQuarter) + 4 * parseInt(personalInfo.gradYear);
 
     const application = {
       name: personalInfo.name,
@@ -73,38 +79,45 @@ const ApplicationForm = (props) => {
       resumeUrl: personalInfo.resumeUrl,
       aboutPrompt: prompts.about,
       interestPrompt: prompts.interest,
-      rolePrompts: Object.fromEntries(selectedRoles.map((role) => [role, prompts[role]])),
-    }
+      rolePrompts: Object.fromEntries(
+        selectedRoles.map((role) => [role, prompts[role]])
+      )
+    };
 
     console.log(application);
 
     setSuccess("Submitting your application...");
 
-    const errorPrefix = "Could not submit your application. Please contact tse@ucsd.edu for support."
+    const errorPrefix =
+      "Could not submit your application. Please contact tse@ucsd.edu for support.";
 
     fetch(SUBMIT_URL, {
       method: "post",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(application)
-    }).then((response) => {
-      setError("");
-      setSuccess("");
-      if (response.ok) {
-        setSuccess(
-          "Thank you for applying to Triton Software Engineering! You will receive a confirmation email shortly. Please monitor your UCSD email for updates on your application status. We promise to get back to you!"
-        );
-      } else {
-        const message = `${errorPrefix} HTTP ${response.status} (${response.statusText})`;
-        setError(message);
-        response.text().then((text) => setError(message + ": " + text)).catch(console.error);
-      }
-    }).catch((e) => {
-      setSuccess("");
-      setError(`${errorPrefix} Details: ${e}`);
-    });
-
+    })
+      .then((response) => {
+        setError("");
+        setSuccess("");
+        if (response.ok) {
+          setSuccess(
+            "Thank you for applying to Triton Software Engineering! You will receive a confirmation email shortly. Please monitor your UCSD email for updates on your application status. We promise to get back to you!"
+          );
+        } else {
+          const message = `${errorPrefix} HTTP ${response.status} (${response.statusText})`;
+          setError(message);
+          response
+            .text()
+            .then((text) => setError(message + ": " + text))
+            .catch(console.error);
+        }
+      })
+      .catch((e) => {
+        setSuccess("");
+        setError(`${errorPrefix} Details: ${e}`);
+      });
   };
 
   if (new Date() > DEADLINE) {
@@ -265,7 +278,10 @@ const ApplicationForm = (props) => {
                 updatePersonalInfo("majorDept", e.target.value);
               }}
             ></Form.Control>
-            <Form.Text>e.g. Cognitive Science, Computer Science and Engineering, Mathematics</Form.Text>
+            <Form.Text>
+              e.g. Cognitive Science, Computer Science and Engineering,
+              Mathematics
+            </Form.Text>
           </Form.Group>
         </Col>
         <Col xs={12} md={6}>
@@ -278,7 +294,10 @@ const ApplicationForm = (props) => {
                 updatePersonalInfo("major", e.target.value);
               }}
             ></Form.Control>
-            <Form.Text>e.g. Cognitive Science with Specialization in Design and Interaction, Computer Engineering</Form.Text>
+            <Form.Text>
+              e.g. Cognitive Science with Specialization in Design and
+              Interaction, Computer Engineering
+            </Form.Text>
           </Form.Group>
         </Col>
       </Row>
@@ -290,10 +309,18 @@ const ApplicationForm = (props) => {
               <Alert variant="danger">
                 <ul>
                   <li>Your resume must be 1 page in PDF format.</li>
-                  <li>Upload your resume to Google Drive, share it so that anyone can view, and paste the link below.</li>
-                  <li>Ensure that your resume is accessible through this link until the end of Fall quarter (so don't delete it or change the sharing permissions).</li>
+                  <li>
+                    Upload your resume to Google Drive, share it so that anyone
+                    can view, and paste the link below.
+                  </li>
+                  <li>
+                    Ensure that your resume is accessible through this link
+                    until the end of Fall quarter (so don't delete it or change
+                    the sharing permissions).
+                  </li>
                 </ul>
-                If your resume cannot be accessed or does not meet these requirements, your application will not be considered.
+                If your resume cannot be accessed or does not meet these
+                requirements, your application will not be considered.
               </Alert>
               <Form.Control
                 required
@@ -323,7 +350,10 @@ const ApplicationForm = (props) => {
       <Row>
         <Col>
           <Form.Group>
-            <Form.Label>Were you previously a part of TSE's TEST program? If so, were you a TEST Designer or a TEST Developer?</Form.Label>
+            <Form.Label>
+              Were you previously a part of TSE's TEST program? If so, were you
+              a TEST Designer or a TEST Developer?
+            </Form.Label>
             <Form.Select
               required
               onChange={(e) => {
@@ -363,30 +393,40 @@ const ApplicationForm = (props) => {
               label="TEST Designer"
               id="test_designer"
               // if any non-TEST box is checked, disable the checkbox
-              disabled={
-                roles.designer || roles.developer
-              }
+              disabled={roles.designer || roles.developer}
             />
             <Form.Check
               onClick={updateCheckbox}
               name="Roles"
               label="TEST Developer"
               id="test_developer"
-              disabled={
-                roles.designer || roles.developer
-              }
+              disabled={roles.designer || roles.developer}
             />
           </Form.Group>
         </Col>
         <Form.Text>
           <p>
-            Each role you select will have a corresponding free-response question.
+            Each role you select will have a corresponding free-response
+            question.
           </p>
           <p>
-            The TSE Early Start Training (TEST) program provides students from <strong>underprivileged backgrounds</strong>, who have little to no technical design/development experience, with a first step into exploring UI/UX design and software engineering. TEST designers and developers will learn the fundamentals of their domain while working on beginner-level projects. TEST is a one-year program provided by TSE. After completing the program, if TEST designers and developers wish to join TSE as general members, they must apply during the next recruitment cycle.
+            The TSE Early Start Training (TEST) program provides students from{" "}
+            <strong>underprivileged backgrounds</strong>, who have little to no
+            technical design/development experience, with a first step into
+            exploring UI/UX design and software engineering. TEST designers and
+            developers will learn the fundamentals of their domain while working
+            on beginner-level projects. TEST is a one-year program provided by
+            TSE. After completing the program, if TEST designers and developers
+            wish to join TSE as general members, they must apply during the next
+            recruitment cycle.
           </p>
           <p>
-            You may apply to either TSE or the TEST program, but not both. Please apply to the TEST program if you believe it would be a good fit for you. Once you apply to the TEST program, we will not be able to consider you for general admission, and vice versa. If you are unsure about which program is right for you, please contact TSE's current president at {PRESIDENT_EMAIL}.
+            You may apply to either TSE or the TEST program, but not both.
+            Please apply to the TEST program if you believe it would be a good
+            fit for you. Once you apply to the TEST program, we will not be able
+            to consider you for general admission, and vice versa. If you are
+            unsure about which program is right for you, please contact TSE's
+            current president at {PRESIDENT_EMAIL}.
           </p>
         </Form.Text>
       </Row>
@@ -418,9 +458,18 @@ const ApplicationForm = (props) => {
         <Row>
           <Form.Group>
             <Form.Label>
-              Why are you interested in the Designer role specifically? Please also include a link to your portfolio or body of work (if you have one), and make sure your link is publicly viewable, or provide instructions on how to access it.
+              Why are you interested in the Designer role specifically? Please
+              also include a link to your portfolio or body of work (if you have
+              one), and make sure your link is publicly viewable, or provide
+              instructions on how to access it.
             </Form.Label>
-            <Form.Control id="prompt_designer" onChange={updatePrompt} required as="textarea" rows={7}></Form.Control>
+            <Form.Control
+              id="prompt_designer"
+              onChange={updatePrompt}
+              required
+              as="textarea"
+              rows={7}
+            ></Form.Control>
           </Form.Group>
         </Row>
       )}
@@ -430,7 +479,13 @@ const ApplicationForm = (props) => {
             <Form.Label>
               Why are you interested in the Developer role specifically?
             </Form.Label>
-            <Form.Control id="prompt_developer" onChange={updatePrompt} required as="textarea" rows={7}></Form.Control>
+            <Form.Control
+              id="prompt_developer"
+              onChange={updatePrompt}
+              required
+              as="textarea"
+              rows={7}
+            ></Form.Control>
           </Form.Group>
         </Row>
       )}
@@ -438,9 +493,17 @@ const ApplicationForm = (props) => {
         <Row>
           <Form.Group>
             <Form.Label>
-              Why do you believe you are a good fit for the TEST program, and what do you hope to gain from the program? Additionally, why are you interested in the TEST Designer role specifically?
+              Why do you believe you are a good fit for the TEST program, and
+              what do you hope to gain from the program? Additionally, why are
+              you interested in the TEST Designer role specifically?
             </Form.Label>
-            <Form.Control id="prompt_test_designer" onChange={updatePrompt} required as="textarea" rows={7}></Form.Control>
+            <Form.Control
+              id="prompt_test_designer"
+              onChange={updatePrompt}
+              required
+              as="textarea"
+              rows={7}
+            ></Form.Control>
           </Form.Group>
         </Row>
       )}
@@ -448,9 +511,17 @@ const ApplicationForm = (props) => {
         <Row>
           <Form.Group>
             <Form.Label>
-              Why do you believe you are a good fit for the TEST program, and what do you hope to gain from the program? Additionally, why are you interested in the TEST Developer role specifically?
+              Why do you believe you are a good fit for the TEST program, and
+              what do you hope to gain from the program? Additionally, why are
+              you interested in the TEST Developer role specifically?
             </Form.Label>
-            <Form.Control id="prompt_test_developer" onChange={updatePrompt} required as="textarea" rows={7}></Form.Control>
+            <Form.Control
+              id="prompt_test_developer"
+              onChange={updatePrompt}
+              required
+              as="textarea"
+              rows={7}
+            ></Form.Control>
           </Form.Group>
         </Row>
       )}
