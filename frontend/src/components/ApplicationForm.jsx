@@ -6,6 +6,18 @@ const SUBMIT_URL =
   "https://tse-fulcrum-2023-i83hg.ondigitalocean.app/api/application";
 const PRESIDENT_EMAIL = "nboloori@ucsd.edu";
 const DEADLINE = new Date("2023-10-15T23:59:59-07:00"); // PDT is UTC-7
+const HEAR_ABOUT_TSE_OPTIONS = [
+  "Word of mouth",
+  "Tabling on Library Walk",
+  "Engineers on the Green",
+  "Flyers around campus",
+  "Postings in class forums",
+  "Presentation in lecture",
+  "Instagram",
+  "LinkedIn",
+  "UCSD website",
+  "Other"
+];
 
 const deadlineStr = DEADLINE.toLocaleString("en-US");
 
@@ -13,13 +25,25 @@ const ApplicationForm = (props) => {
   // initialize state below this line
   const [personalInfo, setPersonalInfo] = useState({});
 
-  // keeps track of which checkboxes are clicked
+  // keeps track of which role checkboxes are clicked
   const [roles, setRoles] = useState({
     test_developer: false,
     test_designer: false,
     developer: false,
     designer: false
   });
+
+  // Track which "How did you hear about TSE"? option(s) the user has selected.
+  // Initialize an object with each option intially mapping to false.
+  const [hearAboutTse, setHearAboutTse] = useState(
+    HEAR_ABOUT_TSE_OPTIONS.reduce(
+      (prevObj, curKey) => ({
+        ...prevObj,
+        [curKey]: false
+      }),
+      {}
+    )
+  );
 
   const [prompts, setPrompts] = useState({});
 
@@ -32,8 +56,12 @@ const ApplicationForm = (props) => {
     setPersonalInfo({ ...personalInfo, [fieldName]: value });
   };
 
-  const updateCheckbox = (e) => {
+  const updateRoleCheckbox = (e) => {
     setRoles({ ...roles, [e.target.id]: e.target.checked });
+  };
+
+  const updateHearAboutTSECheckbox = (e) => {
+    setHearAboutTse({ ...hearAboutTse, [e.target.id]: e.target.checked });
   };
 
   const updatePrompt = (e) => {
@@ -66,6 +94,12 @@ const ApplicationForm = (props) => {
     const gradQuarter =
       parseInt(personalInfo.gradQuarter) + 4 * parseInt(personalInfo.gradYear);
 
+    const selectedHearAboutTSE = Object.entries(hearAboutTse)
+      .filter(([role, selected]) => selected)
+      .map(([role, selected]) =>
+        role === "Other" ? personalInfo.otherHearAboutTSE : role
+      );
+
     const application = {
       name: personalInfo.name,
       pronouns: personalInfo.pronouns,
@@ -75,6 +109,7 @@ const ApplicationForm = (props) => {
       gradQuarter,
       major: personalInfo.major,
       majorDept: personalInfo.majorDept,
+      hearAboutTSE: selectedHearAboutTSE,
       prevTest: personalInfo.prevTest,
       resumeUrl: personalInfo.resumeUrl,
       aboutPrompt: prompts.about,
@@ -304,6 +339,35 @@ const ApplicationForm = (props) => {
       <Row>
         <Col>
           <Form.Group>
+            <Form.Label>How did you hear about TSE?</Form.Label>
+            <Form.Text>
+              <p>Feel free to select multiple options.</p>
+            </Form.Text>
+            {HEAR_ABOUT_TSE_OPTIONS.map((option) => (
+              <Form.Check
+                key={option}
+                onClick={updateHearAboutTSECheckbox}
+                name="HearAboutTSE"
+                label={option}
+                id={option}
+              />
+            ))}
+          </Form.Group>
+          {hearAboutTse.Other ? (
+            <Form.Control
+              required
+              type="text"
+              placeholder="Please sepcify"
+              onChange={(e) => {
+                updatePersonalInfo("otherHearAboutTSE", e.target.value);
+              }}
+            ></Form.Control>
+          ) : null}
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Form.Group>
             <Form.Label>
               Resume link:
               <Alert variant="danger">
@@ -373,7 +437,7 @@ const ApplicationForm = (props) => {
           <Form.Group>
             <Form.Label>Role(s) you are applying for:</Form.Label>
             <Form.Check
-              onClick={updateCheckbox}
+              onClick={updateRoleCheckbox}
               name="Roles"
               label="Designer"
               id="designer"
@@ -381,14 +445,14 @@ const ApplicationForm = (props) => {
               disabled={roles.test_developer || roles.test_designer}
             />
             <Form.Check
-              onClick={updateCheckbox}
+              onClick={updateRoleCheckbox}
               name="Roles"
               label="Developer"
               id="developer"
               disabled={roles.test_developer || roles.test_designer}
             />
             <Form.Check
-              onClick={updateCheckbox}
+              onClick={updateRoleCheckbox}
               name="Roles"
               label="TEST Designer"
               id="test_designer"
@@ -396,7 +460,7 @@ const ApplicationForm = (props) => {
               disabled={roles.designer || roles.developer}
             />
             <Form.Check
-              onClick={updateCheckbox}
+              onClick={updateRoleCheckbox}
               name="Roles"
               label="TEST Developer"
               id="test_developer"
