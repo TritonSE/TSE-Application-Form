@@ -1,3 +1,5 @@
+import { initializeApp } from "firebase/app";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { Alert, Button, Col, Form, Row } from "react-bootstrap";
 import React, { useState } from "react";
 
@@ -71,6 +73,31 @@ const ApplicationForm = (props) => {
     });
   };
 
+  const [resumeFile, setResumeFile] = useState(undefined);
+  const [firebaseStorage, setFirebaseStorage] = useState();
+
+  const initializeFirebaseStorage = () => {
+    const firebaseConfig = JSON.parse(process.env.REACT_APP_FIREBASE_SETTINGS);
+    const app = initializeApp(firebaseConfig);
+    const storage = getStorage(app);
+    setFirebaseStorage(storage);
+    return storage;
+  };
+
+  // Uploads resume to Firebase and returns a URL to view it with
+  const uploadResume = async () => {
+    const storage = firebaseStorage ?? initializeFirebaseStorage();
+    // Put each resume in a unique folder based on applicant name and current date, to reduce
+    // possibility of conflicts (multiple applicants uploading resumes with the same filename)
+    const resumeFolderName = `${personalInfo.name}_${new Date().toLocaleString(
+      "en-US"
+    )}`.replace(/\//g, "%2F");
+    const storageRef = ref(storage, `${resumeFolderName}/${resumeFile.name}`);
+    const snapshot = await uploadBytes(storageRef, resumeFile);
+    const resumeUrl = await getDownloadURL(snapshot.ref);
+    return resumeUrl;
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
     setError("");
@@ -100,58 +127,71 @@ const ApplicationForm = (props) => {
         role === "Other" ? personalInfo.otherHearAboutTSE : role
       );
 
-    const application = {
-      name: personalInfo.name,
-      pronouns: personalInfo.pronouns,
-      email: personalInfo.email,
-      phone: personalInfo.phone,
-      startQuarter,
-      gradQuarter,
-      major: personalInfo.major,
-      majorDept: personalInfo.majorDept,
-      hearAboutTSE: selectedHearAboutTSE,
-      prevTest: personalInfo.prevTest,
-      resumeUrl: personalInfo.resumeUrl,
-      aboutPrompt: prompts.about,
-      interestPrompt: prompts.interest,
-      rolePrompts: Object.fromEntries(
-        selectedRoles.map((role) => [role, prompts[role]])
-      )
-    };
+    if (!resumeFile) {
+      setError("Please upload your resume.");
+      return;
+    }
 
-    console.log(application);
+    uploadResume()
+      .then((resumeUrl) => {
+        const application = {
+          name: personalInfo.name,
+          pronouns: personalInfo.pronouns,
+          email: personalInfo.email,
+          phone: personalInfo.phone,
+          startQuarter,
+          gradQuarter,
+          major: personalInfo.major,
+          majorDept: personalInfo.majorDept,
+          hearAboutTSE: selectedHearAboutTSE,
+          prevTest: personalInfo.prevTest,
+          resumeUrl,
+          aboutPrompt: prompts.about,
+          interestPrompt: prompts.interest,
+          rolePrompts: Object.fromEntries(
+            selectedRoles.map((role) => [role, prompts[role]])
+          )
+        };
 
-    setSuccess("Submitting your application...");
+        console.log(application);
 
-    const errorPrefix =
-      "Could not submit your application. Please contact tse@ucsd.edu for support.";
+        setSuccess("Submitting your application...");
 
-    fetch(SUBMIT_URL, {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(application)
-    })
-      .then((response) => {
-        setError("");
-        setSuccess("");
-        if (response.ok) {
-          setSuccess(
-            "Thank you for applying to Triton Software Engineering! You will receive a confirmation email shortly. Please monitor your UCSD email for updates on your application status. We promise to get back to you!"
-          );
-        } else {
-          const message = `${errorPrefix} HTTP ${response.status} (${response.statusText})`;
-          setError(message);
-          response
-            .text()
-            .then((text) => setError(message + ": " + text))
-            .catch(console.error);
-        }
+        const errorPrefix =
+          "Could not submit your application. Please contact tse@ucsd.edu for support.";
+
+        fetch(SUBMIT_URL, {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(application)
+        })
+          .then((response) => {
+            setError("");
+            setSuccess("");
+            if (response.ok) {
+              setSuccess(
+                "Thank you for applying to Triton Software Engineering! You will receive a confirmation email shortly. Please monitor your UCSD email for updates on your application status. We promise to get back to you!"
+              );
+            } else {
+              const message = `${errorPrefix} HTTP ${response.status} (${response.statusText})`;
+              setError(message);
+              response
+                .text()
+                .then((text) => setError(message + ": " + text))
+                .catch(console.error);
+            }
+          })
+          .catch((e) => {
+            setSuccess("");
+            setError(`${errorPrefix} Details: ${e}`);
+          });
       })
-      .catch((e) => {
-        setSuccess("");
-        setError(`${errorPrefix} Details: ${e}`);
+      .catch((error) => {
+        setError(
+          `Could not upload your resume. Please contact tse@ucsd.edu for support. Error: ${error}`
+        );
       });
   };
 
@@ -369,45 +409,20 @@ const ApplicationForm = (props) => {
         <Col>
           <Form.Group>
             <Form.Label>
-              Resume link:
+              Resume:
               <Alert variant="danger">
-                <ul>
-                  <li>Your resume must be 1 page in PDF format.</li>
-                  <li>
-                    Upload your resume to Google Drive, share it so that anyone
-                    can view, and paste the link below.
-                  </li>
-                  <li>
-                    Ensure that your resume is accessible through this link
-                    until the end of Fall quarter (so don't delete it or change
-                    the sharing permissions).
-                  </li>
-                </ul>
-                If your resume cannot be accessed or does not meet these
-                requirements, your application will not be considered.
+                Your resume must be 1 page in PDF format. If your resume does
+                not meet this requirement, your application will not be
+                considered.
               </Alert>
               <Form.Control
                 required
-                type="url"
+                type="file"
                 onChange={(e) => {
-                  updatePersonalInfo("resumeUrl", e.target.value);
+                  setResumeFile(e.target.files[0]);
                 }}
-              ></Form.Control>
+              />
             </Form.Label>
-            {personalInfo.resumeUrl && (
-              <Form.Text>
-                Open{" "}
-                <a
-                  href={personalInfo.resumeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  this link
-                </a>{" "}
-                in an incognito browser window to double check your sharing
-                permissions.
-              </Form.Text>
-            )}
           </Form.Group>
         </Col>
       </Row>
