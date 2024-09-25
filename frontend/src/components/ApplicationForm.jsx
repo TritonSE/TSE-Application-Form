@@ -1,11 +1,11 @@
-import { initializeApp } from "firebase/app";
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { Alert, Button, Col, Form, Row } from "react-bootstrap";
 import React, { useState } from "react";
 
 // Update these values each year before recruitment.
-const SUBMIT_URL =
-  "https://tse-fulcrum-2023-i83hg.ondigitalocean.app/api/application";
+const BASE_BACKEND_URL = "https://tse-fulcrum-2023-i83hg.ondigitalocean.app";
+const RESUME_UPLOAD_URL = `${BASE_BACKEND_URL}/api/resume`;
+const SUBMIT_URL = `${BASE_BACKEND_URL}/api/application`;
+
 const PRESIDENT_EMAIL = "v6liu@ucsd.edu";
 const DEADLINE = new Date("2023-10-15T23:59:59-07:00"); // PDT is UTC-7
 const HEAR_ABOUT_TSE_OPTIONS = [
@@ -74,28 +74,21 @@ const ApplicationForm = (props) => {
   };
 
   const [resumeFile, setResumeFile] = useState(undefined);
-  const [firebaseStorage, setFirebaseStorage] = useState();
 
-  const initializeFirebaseStorage = () => {
-    const firebaseConfig = JSON.parse(process.env.REACT_APP_FIREBASE_SETTINGS);
-    const app = initializeApp(firebaseConfig);
-    const storage = getStorage(app);
-    setFirebaseStorage(storage);
-    return storage;
-  };
-
-  // Uploads resume to Firebase and returns a URL to view it with
+  // Uploads resume to backend and returns a URL to view it with
   const uploadResume = async () => {
-    const storage = firebaseStorage ?? initializeFirebaseStorage();
-    // Put each resume in a unique folder based on applicant name and current date, to reduce
-    // possibility of conflicts (multiple applicants uploading resumes with the same filename)
-    const resumeFolderName = `${personalInfo.name}_${new Date().toLocaleString(
-      "en-US"
-    )}`.replace(/\//g, "%2F");
-    const storageRef = ref(storage, `${resumeFolderName}/${resumeFile.name}`);
-    const snapshot = await uploadBytes(storageRef, resumeFile);
-    const resumeUrl = await getDownloadURL(snapshot.ref);
-    return resumeUrl;
+    const formData = new FormData();
+    formData.append("resumeFile", resumeFile);
+    const response = await fetch(RESUME_UPLOAD_URL, {
+      method: "POST",
+      body: formData
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data.resumeUrl;
+    } else {
+      throw new Error(`HTTP ${response.status} (${response.statusText}`);
+    }
   };
 
   const onSubmit = (e) => {
