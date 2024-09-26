@@ -2,12 +2,12 @@ import { Alert, Button, Col, Form, Row } from "react-bootstrap";
 import React, { useState } from "react";
 
 // Update these values each year before recruitment.
-const BASE_BACKEND_URL = "https://tse-fulcrum-2023-i83hg.ondigitalocean.app";
+const BASE_BACKEND_URL = "https://tse-fulcrum-s83w8.ondigitalocean.app";
 const RESUME_UPLOAD_URL = `${BASE_BACKEND_URL}/api/resume`;
 const SUBMIT_URL = `${BASE_BACKEND_URL}/api/application`;
 
 const PRESIDENT_EMAIL = "v6liu@ucsd.edu";
-const DEADLINE = new Date("2023-10-15T23:59:59-07:00"); // PDT is UTC-7
+const DEADLINE = new Date("2024-10-13T23:59:59-07:00"); // PDT is UTC-7
 const HEAR_ABOUT_TSE_OPTIONS = [
   "Word of mouth",
   "Tabling on Library Walk",
