@@ -1,4 +1,4 @@
-import { Alert, Button, Col, Form, Row } from "react-bootstrap";
+import { Alert, Button, Col, Form, Row, Spinner } from "react-bootstrap";
 import React, { useState } from "react";
 
 // Update these values each year before recruitment.
@@ -49,6 +49,7 @@ const ApplicationForm = (props) => {
 
   const [prompts, setPrompts] = useState({});
 
+  const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -93,6 +94,7 @@ const ApplicationForm = (props) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    setSubmitting(true);
     setError("");
     setSuccess("");
 
@@ -101,11 +103,13 @@ const ApplicationForm = (props) => {
       .map(([role, selected]) => role);
     if (selectedRoles.length === 0) {
       setError("You must select at least one role to apply to.");
+      setSubmitting(false);
       return;
     }
 
     if (!personalInfo.startQuarter || !personalInfo.gradQuarter) {
       setError("Select your start quarter and graduation quarter.");
+      setSubmitting(false);
       return;
     }
     const startQuarter =
@@ -122,8 +126,11 @@ const ApplicationForm = (props) => {
 
     if (!resumeFile) {
       setError("Please upload your resume.");
+      setSubmitting(false);
       return;
     }
+
+    setSuccess("Submitting your application...");
 
     uploadResume()
       .then((resumeUrl) => {
@@ -147,8 +154,6 @@ const ApplicationForm = (props) => {
         };
 
         console.log(application);
-
-        setSuccess("Submitting your application...");
 
         const errorPrefix =
           "Could not submit your application. Please contact tse@ucsd.edu for support.";
@@ -179,12 +184,16 @@ const ApplicationForm = (props) => {
           .catch((e) => {
             setSuccess("");
             setError(`${errorPrefix} Details: ${e}`);
+          })
+          .finally(() => {
+            setSubmitting(false);
           });
       })
       .catch((error) => {
         setError(
           `Could not upload your resume. Please contact tse@ucsd.edu for support. Error: ${error}`
         );
+        setSubmitting(false);
       });
   };
 
@@ -611,9 +620,21 @@ const ApplicationForm = (props) => {
           </Col>
         </Row>
       )}
-      <Button variant="primary" type="submit" className="mt-3">
-        Submit
-      </Button>
+      {
+        /**
+         * Adding this submitting/loading state to prevent spam clicking the button and submitting
+         * duplicate applications. This bug has always been around but is more obvious now with resume
+         * uploads that take a few seconds.
+         */
+        <Button
+          variant="primary"
+          type="submit"
+          className="mt-3"
+          disabled={submitting}
+        >
+          {submitting ? <Spinner animation="border" role="status" /> : "Submit"}
+        </Button>
+      }
     </Form>
   );
 };
